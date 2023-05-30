@@ -1,0 +1,61 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: gray;
+    margin: 0;
+}
+
+.header{
+    background-color: rgb(194, 194, 233);
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.turn{
+    margin-top: 16px;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.grid{
+    width: 450px;
+    height: 450px;
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    border: 2px solid black;
+}
+
+.grid > div{
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cross{
+    font-size: 100px;
+}
+
+.circle{
+    font-size: 170px;
+}
+
+.restart{
+    background-color: rgb(194, 194, 233);
+    border-radius: 4px;
+    transform: scale(1.5);
+}
