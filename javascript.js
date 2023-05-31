@@ -36,8 +36,8 @@ const gameBoard = (() =>{
 })();
 
 const game = (() =>{
-    let player1 = player('Player X', 'X');
-    let player2 = player('Player O', 'O');
+    let player1 = player('Edwin', 'X');
+    let player2 = player('Zhu', 'O');
     let currentPlayer = player1;
     let gameFinished = false;
     let spacesRemaining = 9;
@@ -45,28 +45,53 @@ const game = (() =>{
     let squares = document.querySelectorAll(".square");
     let restart = document.querySelector(".restart");
     let turn = document.querySelector(".turn");
+    turn.textContent = `${currentPlayer.name}'s Turn`;
 
     squares.forEach(ele => {
         ele.addEventListener("click", () => {
-            if (ele.textContent === ""){
+            if (ele.textContent === "" && !gameFinished){
                 gameBoard.addSymbol(ele.dataset.index, currentPlayer.symbol);
-                if (currentPlayer == player1){
-                    currentPlayer = player2;
-                    turn.textContent = "Player O's Turn";
-                }
-                else{
-                    currentPlayer = player1;
-                    turn.textContent = "Player X's Turn"
-                }
+                spacesRemaining--;
+                checkWinner(currentPlayer);
             }
         });
     });
+
+    function checkWinner(player){
+        if ((gameBoard.getSymbol(0) == player.symbol && gameBoard.getSymbol(1) == player.symbol && gameBoard.getSymbol(2) == player.symbol) ||
+            (gameBoard.getSymbol(3) == player.symbol && gameBoard.getSymbol(4) == player.symbol && gameBoard.getSymbol(5) == player.symbol) ||
+            (gameBoard.getSymbol(6) == player.symbol && gameBoard.getSymbol(7) == player.symbol && gameBoard.getSymbol(8) == player.symbol) ||
+            (gameBoard.getSymbol(0) == player.symbol && gameBoard.getSymbol(3) == player.symbol && gameBoard.getSymbol(6) == player.symbol) ||
+            (gameBoard.getSymbol(1) == player.symbol && gameBoard.getSymbol(4) == player.symbol && gameBoard.getSymbol(7) == player.symbol) ||
+            (gameBoard.getSymbol(2) == player.symbol && gameBoard.getSymbol(5) == player.symbol && gameBoard.getSymbol(8) == player.symbol) ||
+            (gameBoard.getSymbol(2) == player.symbol && gameBoard.getSymbol(4) == player.symbol && gameBoard.getSymbol(6) == player.symbol) ||
+            (gameBoard.getSymbol(0) == player.symbol && gameBoard.getSymbol(4) == player.symbol && gameBoard.getSymbol(8) == player.symbol))
+        {
+            turn.textContent = `${currentPlayer.name} has won!`;
+            gameFinished = true;
+        }
+        else if (spacesRemaining === 0){
+            turn.textContent = `It's a tie!`;
+            gameFinished = true;
+        }
+        else{
+            if (currentPlayer == player1){
+                currentPlayer = player2;
+                turn.textContent = `${currentPlayer.name}'s Turn`;
+            }
+            else{
+                currentPlayer = player1;
+                turn.textContent = `${currentPlayer.name}'s Turn`;
+            }
+        }
+    }
 
     restart.addEventListener("click", () =>{
         gameBoard.clearBoard();
         gameFinished = false;
         currentPlayer = player1;
-        turn.textContent = "Player X's Turn"
+        turn.textContent = `${currentPlayer.name}'s Turn`;
+        spacesRemaining = 9;
     })
 
     return {};
