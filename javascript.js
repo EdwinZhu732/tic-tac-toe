@@ -36,8 +36,8 @@ const gameBoard = (() =>{
 })();
 
 const game = (() =>{
-    let player1 = player('Edwin', 'X');
-    let player2 = player('Zhu', 'O');
+    let player1 = player('X', 'X');
+    let player2 = player('O', 'O');
     let currentPlayer = player1;
     let gameFinished = false;
     let spacesRemaining = 9;
@@ -46,6 +46,7 @@ const game = (() =>{
     let restart = document.querySelector(".restart");
     let turn = document.querySelector(".turn");
     turn.textContent = `${currentPlayer.name}'s Turn`;
+    let myForm = document.querySelector("#form");
 
     squares.forEach(ele => {
         ele.addEventListener("click", () => {
@@ -94,6 +95,22 @@ const game = (() =>{
         spacesRemaining = 9;
     })
 
+    myForm.addEventListener("submit", getNames, false);
+
+    function getNames(event){
+        if (event.type === "submit"){
+            player1.name = event.target.p1.value;
+            player2.name = event.target.p2.value;
+            event.target.p1.value = "";
+            event.target.p2.value = "";
+        }
+        event.preventDefault();
+        gameBoard.clearBoard();
+        gameFinished = false;
+        currentPlayer = player1;
+        turn.textContent = `${currentPlayer.name}'s Turn`;
+        spacesRemaining = 9;
+    }
     return {};
 })();
 
